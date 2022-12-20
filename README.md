@@ -14,9 +14,37 @@
 ### Custom Measures
 
 ```dax
-
+Total Sightings = COUNTA(reports[Posted])
 ``` 
 
+```dax
+% in American Southwest = 
+DIVIDE([American Southwest Sightings], [Total Sightings], 0)
+``` 
+
+```dax
+% suspected hoax = 
+DIVIDE([Suspected Hoax], [Total Sightings], 0)
+``` 
+
+```dax
+American Southwest Sightings = 
+CALCULATE(
+    [Total Sightings],
+    reports[State] = "CO" ||
+    reports[State] = "NM" ||
+    reports[State] = "AZ"||
+    reports[State] = "CA" ||
+    reports[State] = "TX" ||
+    reports[State] = "UT")
+``` 
+
+```dax
+Suspected Hoax = 
+CALCULATE(
+    [Total Sightings],
+    CONTAINSSTRING(reports[Summary], "oax"))
+``` 
 <br><br/>
 
 ### Model
